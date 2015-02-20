@@ -1005,13 +1005,13 @@ MatIterator_<_Tp> Mat::end()
 template<typename _Tp, typename Functor> inline
 void Mat::forEach(const Functor& operation) {
     this->forEach_impl<_Tp>(operation);
-};
+}
 
 template<typename _Tp, typename Functor> inline
 void Mat::forEach(const Functor& operation) const {
     // call as not const
     (const_cast<Mat*>(this))->forEach<const _Tp>(operation);
-};
+}
 
 template<typename _Tp> inline
 Mat::operator std::vector<_Tp>() const
@@ -3284,7 +3284,8 @@ inline void UMat::release()
 {
     if( u && CV_XADD(&(u->urefcount), -1) == 1 )
         deallocate();
-    size.p[0] = 0;
+    for(int i = 0; i < dims; i++)
+        size.p[i] = 0;
     u = 0;
 }
 
